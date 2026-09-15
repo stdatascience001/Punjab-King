@@ -12,4 +12,10 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    // Vite's preview server rejects any request whose Host header isn't allow-listed (a
+    // DNS-rebinding protection) — a leading "." allows the domain and every subdomain, so
+    // this covers punjab-king.onrender.com and any other *.onrender.com service.
+    allowedHosts: ['.onrender.com'],
+  },
 });
