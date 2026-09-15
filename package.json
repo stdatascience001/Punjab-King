@@ -1,0 +1,17 @@
+{
+  "name": "punjab-king-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PB Exchange frontend (apps/web) — split from the main monorepo for standalone frontend development.",
+  "workspaces": [
+    "apps/web",
+    "packages/types"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=packages/types && npm run build --workspace=apps/web"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
