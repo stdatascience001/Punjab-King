@@ -1,4 +1,9 @@
-const BASE_URL = '/api/v1';
+// In local dev, the Vite proxy (vite.config.ts) forwards the relative "/api/v1" path to the
+// backend, so no env var is needed. In production the frontend and backend are deployed to
+// separate domains (e.g. two Render services), so VITE_API_URL must be set at build time to
+// the backend's full URL — otherwise "/api/v1" would resolve against the frontend's own
+// static-site domain, which has no API, and every request would fail.
+const BASE_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 export async function apiRequest<T>(
   endpoint: string,
