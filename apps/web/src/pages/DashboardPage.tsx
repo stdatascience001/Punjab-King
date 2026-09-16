@@ -14,6 +14,7 @@ interface DashboardMetricsResponse {
     declaredNumber: string | null;
     totalAmount: number;
     totalCount: number;
+    totalPayout: number;
     cutoffPassed: boolean;
     timeRemainingSeconds: number;
     isActive?: boolean;
@@ -145,9 +146,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       <span className="text-lg sm:text-xl font-bold text-[#00897b] font-sans tracking-tight">
                         {s.totalAmount > 0 ? s.totalAmount.toLocaleString('en-IN') : '0'}
                       </span>
-                      <span className="text-xs font-semibold text-emerald-500 font-sans">
-                        {s.totalCount > 0 ? s.totalCount.toLocaleString('en-IN') : '0'}
-                      </span>
+                      {/* A second right-side metric (total payout, entry count, etc.) belongs here to
+                          match the live reference's shift-card layout, but the exact figure it should
+                          show hasn't been confirmed yet — showing a guessed value produced nonsensical
+                          numbers (payout far exceeding the amount collected), so it's left blank rather
+                          than displaying unverified data until the correct metric is confirmed. */}
                     </div>
                   </div>
                 )}

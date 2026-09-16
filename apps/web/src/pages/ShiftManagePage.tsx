@@ -8,6 +8,18 @@ interface ShiftManagePageProps {
   onRefreshShifts: () => void;
 }
 
+// New shifts must default to today's actual date (DD-MM-YYYY) — a hardcoded stale date here
+// previously left every newly created shift's open_date out of sync with real transaction
+// created_at dates, so the dashboard's per-shift totals (scoped to open_date) stayed at 0
+// forever for that shift.
+function getTodayFormatted(): string {
+  const d = new Date();
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
 const ALL_ROLES = [
   { id: 1, name: 'DEVELOPER' },
   { id: 2, name: 'SUPER ADMIN' },
@@ -32,7 +44,7 @@ export const ShiftManagePage: React.FC<ShiftManagePageProps> = ({ shifts, onRefr
 
   // Modal Form state matching Image 4
   const [shiftName, setShiftName] = useState('');
-  const [openDate, setOpenDate] = useState('08-09-2026');
+  const [openDate, setOpenDate] = useState(getTodayFormatted());
   const [nextDay, setNextDay] = useState('NO');
   const [shiftFor, setShiftFor] = useState('Both');
   const [roleTimings, setRoleTimings] = useState<{ [roleName: string]: string }>({
@@ -77,7 +89,7 @@ export const ShiftManagePage: React.FC<ShiftManagePageProps> = ({ shifts, onRefr
   const handleOpenAdd = () => {
     setEditingShift(null);
     setShiftName('');
-    setOpenDate('08-09-2026');
+    setOpenDate(getTodayFormatted());
     setNextDay('NO');
     setShiftFor('Both');
     const defaultTimings: { [roleName: string]: string } = {};
